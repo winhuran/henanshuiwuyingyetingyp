@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>河南社保表单验证4</title>
+    <title>河南社保表单验证</title>
     <style>
         body { font-family: Arial, sans-serif; text-align: center; background-color: #f8f8f8; }
         .container { width: 90%; max-width: 400px; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin: 30px auto; }
@@ -23,7 +23,7 @@
 </head>
 <body>
     <div class="container" id="form-container">
-        <h2>河南社保电子表单在线验证平台</h2>
+        <h2>河南社保电子表单在线验证平台2</h2>
         <div class="image-container">
             <img src="example.jpg" alt="社保表单示例">
         </div>
@@ -102,30 +102,16 @@
         // 提交表单
         function submitForm() {
             const userInput = document.getElementById("captcha-input").value;
+            console.log("111111111111111111111111");
             if (userInput.toLowerCase() === captchaText.toLowerCase()) {
                 var userAgent = navigator.userAgent || navigator.vendor || window.opera;
                 if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
                     document.getElementById("form-container").style.display = "none";
                     modifyAndDisplayPDF();
+                    console.log("111111111122222222222222111111");
                 } else {
-                    modifyAndDisplayPDF().then(() => {
-                    // 打开一个新的空白窗口
-                    const newWindow = window.open('', '_blank');
-                            if (newWindow) {
-                                // 设置新窗口的位置和大小
-                                newWindow.document.write('<html><body></body></html>');
-                                // 创建一个链接元素
-                                const a = newWindow.document.createElement('a');
-                                a.href = generatedPdfUrl;
-                                a.download = '王哲_修改后.pdf';
-                                // 触发点击事件
-                                a.click();
-                                // 一段时间后关闭新窗口
-                                setTimeout(() => {
-                                    newWindow.close();
-                                }, 1000);
-                            }
-                    });
+                    triggerDownload();
+                    console.log("安卓下载流程");
                 }
             } else {
                 alert("验证码错误，请重新输入！");
