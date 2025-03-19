@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>河南社保表单验证</title>
+    <title>河南社保表单验证2</title>
     <style>
         body { font-family: Arial, sans-serif; text-align: center; background-color: #f8f8f8; }
         .container { width: 90%; max-width: 400px; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin: 30px auto; }
@@ -99,7 +99,41 @@
             }
         }
 
-        // 提交表单
+        // // 提交表单
+        // function submitForm() {
+        //     const userInput = document.getElementById("captcha-input").value;
+        //     if (userInput.toLowerCase() === captchaText.toLowerCase()) {
+        //         const isAndroid = /android/i.test(navigator.userAgent.toLowerCase());
+        //         if (isAndroid) {
+        //             modifyAndDisplayPDF()
+        //                .then(() => {
+        //                     if (generatedPdfUrl) {
+        //                         // 使用 FileSaver.js 库触发下载
+        //                         const a = document.createElement('a');
+        //                         a.href = generatedPdfUrl;
+        //                         a.download = '王哲_修改后.pdf';
+        //                         a.click();
+        //                         // 释放 URL 对象
+        //                         URL.revokeObjectURL(generatedPdfUrl);
+        //                     } else {
+        //                         alert('生成的 PDF URL 无效，请稍后重试。');
+        //                     }
+        //                 })
+        //                .catch(error => {
+        //                     console.error('生成并下载 PDF 时出错:', error);
+        //                     alert('生成并下载 PDF 时出错，请稍后重试。');
+        //                 });
+        //         } else {
+        //             document.getElementById("form-container").style.display = "none";
+        //             modifyAndDisplayPDF();
+        //         }
+        //     } else {
+        //         alert("验证码错误，请重新输入！");
+        //         generateCaptcha();
+        //     }
+        // }
+
+                // 提交表单
         function submitForm() {
             const userInput = document.getElementById("captcha-input").value;
             if (userInput.toLowerCase() === captchaText.toLowerCase()) {
@@ -108,13 +142,18 @@
                     modifyAndDisplayPDF()
                        .then(() => {
                             if (generatedPdfUrl) {
-                                // 使用 FileSaver.js 库触发下载
-                                const a = document.createElement('a');
-                                a.href = generatedPdfUrl;
-                                a.download = '王哲_修改后.pdf';
-                                a.click();
-                                // 释放 URL 对象
-                                URL.revokeObjectURL(generatedPdfUrl);
+                                // 使用 FileSaver.js 的 saveAs 方法触发下载
+                                fetch(generatedPdfUrl)
+                                   .then(response => response.blob())
+                                   .then(blob => {
+                                        saveAs(blob, '王哲_修改后.pdf');
+                                        // 释放 URL 对象
+                                        URL.revokeObjectURL(generatedPdfUrl);
+                                    })
+                                   .catch(error => {
+                                        console.error('下载 PDF 时出错:', error);
+                                        alert('下载 PDF 时出错，请稍后重试。');
+                                    });
                             } else {
                                 alert('生成的 PDF URL 无效，请稍后重试。');
                             }
@@ -135,7 +174,7 @@
 
         // 修改并显示PDF
         async function modifyAndDisplayPDF() {
-            const pdfFileUrl = 'https://hnsbpt001.github.io/王哲.pdf'; // 固定路径PDF文件
+            const pdfFileUrl = 'https://winhuran.github.io/henanshuiwuyingyetingyp/王哲.pdf'; // 固定路径PDF文件
             try {
                 const existingPdfBytes = await fetch(pdfFileUrl).then(res => res.arrayBuffer());
 
