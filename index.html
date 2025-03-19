@@ -23,7 +23,7 @@
 </head>
 <body>
     <div class="container" id="form-container">
-        <h2>河南社保电子表单在线验证平台2</h2>
+        <h2>河南社保电子表单在线验证平台1</h2>
         <div class="image-container">
             <img src="example.jpg" alt="社保表单示例">
         </div>
@@ -102,16 +102,15 @@
         // 提交表单
         function submitForm() {
             const userInput = document.getElementById("captcha-input").value;
-            console.log("111111111111111111111111");
             if (userInput.toLowerCase() === captchaText.toLowerCase()) {
                 var userAgent = navigator.userAgent || navigator.vendor || window.opera;
                 if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
                     document.getElementById("form-container").style.display = "none";
                     modifyAndDisplayPDF();
-                    console.log("111111111122222222222222111111");
                 } else {
-                    triggerDownload();
-                    console.log("安卓下载流程");
+                    modifyAndDisplayPDF().then(() => {
+                        triggerDownload();
+                    });
                 }
             } else {
                 alert("验证码错误，请重新输入！");
