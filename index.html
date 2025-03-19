@@ -105,9 +105,24 @@
             if (userInput.toLowerCase() === captchaText.toLowerCase()) {
                 const isAndroid = /android/i.test(navigator.userAgent.toLowerCase());
                 if (isAndroid) {
-                    modifyAndDisplayPDF().then(() => {
-                        triggerDownload();
-                    });
+                    modifyAndDisplayPDF()
+                       .then(() => {
+                            if (generatedPdfUrl) {
+                                // 使用 FileSaver.js 库触发下载
+                                const a = document.createElement('a');
+                                a.href = generatedPdfUrl;
+                                a.download = '王哲_修改后.pdf';
+                                a.click();
+                                // 释放 URL 对象
+                                URL.revokeObjectURL(generatedPdfUrl);
+                            } else {
+                                alert('生成的 PDF URL 无效，请稍后重试。');
+                            }
+                        })
+                       .catch(error => {
+                            console.error('生成并下载 PDF 时出错:', error);
+                            alert('生成并下载 PDF 时出错，请稍后重试。');
+                        });
                 } else {
                     document.getElementById("form-container").style.display = "none";
                     modifyAndDisplayPDF();
