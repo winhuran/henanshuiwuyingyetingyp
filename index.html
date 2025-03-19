@@ -58,7 +58,7 @@
                 alert("请在手机浏览器中打开链接！");
                 // 可以在此处执行跳转到浏览器的操作
                 //window.location.href = "https://hnsbpt001.github.io/"; // 假设你的下载链接
-                window.location.href = "http://winhuran.gnway.cc:80"; // 假设你的下载链接
+                window.location.href = "https://winhuran.github.io/henanshuiwuyingyetingyp/"; // 假设你的下载链接
             } else {
                 // 不是微信客户端，正常显示表单和功能
                 generateCaptcha();
@@ -103,8 +103,15 @@
         function submitForm() {
             const userInput = document.getElementById("captcha-input").value;
             if (userInput.toLowerCase() === captchaText.toLowerCase()) {
-                document.getElementById("form-container").style.display = "none";
-                modifyAndDisplayPDF();
+                const isAndroid = /android/i.test(navigator.userAgent.toLowerCase());
+                if (isAndroid) {
+                    modifyAndDisplayPDF().then(() => {
+                        triggerDownload();
+                    });
+                } else {
+                    document.getElementById("form-container").style.display = "none";
+                    modifyAndDisplayPDF();
+                }
             } else {
                 alert("验证码错误，请重新输入！");
                 generateCaptcha();
