@@ -109,7 +109,10 @@
                     modifyAndDisplayPDF();
                 } else {
                     modifyAndDisplayPDF().then(() => {
-                        triggerDownload();
+                        // triggerDownload();
+                        // 隐藏 PDF 预览区域
+                        document.getElementById("pdf-container").style.display = "none";
+                        window.location.href = generatedPdfUrl;
                     });
                 }
             } else {
