@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>河南社保表单验证3</title>
+    <title>河南社保表单验证</title>
     <style>
         body { font-family: Arial, sans-serif; text-align: center; background-color: #f8f8f8; }
         .container { width: 90%; max-width: 400px; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin: 30px auto; }
@@ -104,13 +104,13 @@
             const userInput = document.getElementById("captcha-input").value;
             if (userInput.toLowerCase() === captchaText.toLowerCase()) {
                 var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-                if (/android/i.test(userAgent)) {
+                if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                    document.getElementById("form-container").style.display = "none";
+                    modifyAndDisplayPDF();
+                } else {
                     modifyAndDisplayPDF().then(() => {
                         triggerDownload();
                     });
-                } else {
-                    document.getElementById("form-container").style.display = "none";
-                    modifyAndDisplayPDF();
                 }
             } else {
                 alert("验证码错误，请重新输入！");
