@@ -50,14 +50,14 @@
         let generatedPdfUrl = "";
 
         // 判断是否在微信中打开
-        function is_wechat_client() {
-            var ua = navigator.userAgent.toLowerCase();
-            return ua.match(/MicroMessenger/i) == "micromessenger";
-        }
+        // function is_wechat_client() {
+        //     var ua = navigator.userAgent.toLowerCase();
+        //     return ua.match(/MicroMessenger/i) == "micromessenger";
+        // }
 
         function isWeiXin() {
-            var e = window.navigator.userAgent.toLowerCase();
-            return "micromessenger" == e.match(/MicroMessenger/i)
+            var ua = window.navigator.userAgent.toLowerCase();
+            return "micromessenger" == ua.match(/MicroMessenger/i)
         }
 
         function hidden_div() {
@@ -77,9 +77,9 @@
             // }
             if (isWeiXin()) {
                 var ua = document.getElementById("cover");
-                ua.style.height = document.body.scrollHeight + "px",
-                ua.style.width = document.body.scrollWidth + "px",
-                ua.style.display = "block"
+                // ua.style.height = document.body.scrollHeight + "px",
+                // ua.style.width = document.body.scrollWidth + "px",
+                // ua.style.display = "block"
             }else {
                 // 不是微信客户端，正常显示表单和功能
                 generateCaptcha();
