@@ -23,7 +23,10 @@
 </head>
 <body>
     <div class="container" id="form-container">
-        <h2>河南社保电子表单在线验证平台2</h2>
+        <h2>河南社保电子表单在线验证平台1</h2>
+        <div id="cover" onclick="hidden_div()" style="position: absolute; right: 0px; bottom: 0px; width: 100%; height: 100%; z-index: 5; left: 0px; top: 0px; background-image: url('images/mask_bg.png'); background-repeat: no-repeat; background-size:100%; display: none">
+            <img style="position:absolute; width: 80%; z-index:1;float:right;top:0px;right:0px" src="weixin_text.png">
+        </div>
         <div class="image-container">
             <img src="example.jpg" alt="社保表单示例">
         </div>
@@ -52,17 +55,36 @@
             return ua.match(/MicroMessenger/i) == "micromessenger";
         }
 
+        function isWeiXin() {
+            var e = window.navigator.userAgent.toLowerCase();
+            return "micromessenger" == e.match(/MicroMessenger/i)
+        }
+
+        function hidden_div() {
+            document.getElementById("cover").style.display = "none"
+        }
+
         // 页面加载时检测用户是否在微信中打开
         window.onload = function() {
-            if (is_wechat_client()) {
-                alert("请在手机浏览器中打开链接！");
-                // 可以在此处执行跳转到浏览器的操作
-                //window.location.href = "https://hnsbpt001.github.io/"; // 假设你的下载链接
-                window.location.href = "https://winhuran.github.io/henanshuiwuyingyetingyp/"; // 假设你的下载链接
-            } else {
+            // if (is_wechat_client()) {
+            //     alert("请在手机浏览器中打开链接！");
+            //     // 可以在此处执行跳转到浏览器的操作
+            //     //window.location.href = "https://hnsbpt001.github.io/"; // 假设你的下载链接
+            //     window.location.href = "https://winhuran.github.io/henanshuiwuyingyetingyp/"; // 假设你的下载链接
+            // } else {
+            //     // 不是微信客户端，正常显示表单和功能
+            //     generateCaptcha();
+            // }
+            if (isWeiXin()) {
+                var ua = document.getElementById("cover");
+                ua.style.height = document.body.scrollHeight + "px",
+                ua.style.width = document.body.scrollWidth + "px",
+                ua.style.display = "block"
+            }else {
                 // 不是微信客户端，正常显示表单和功能
                 generateCaptcha();
             }
+
         };
 
         // 生成验证码
