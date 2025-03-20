@@ -57,7 +57,13 @@
 
         function isWeiXin() {
             var ua = window.navigator.userAgent.toLowerCase();
-            return "micromessenger" == ua.match(/MicroMessenger/i)
+            return "micromessenger" == ua.match(/MicroMessenger/i);
+        }
+
+        // 判断是否在支付宝中打开
+        function isAlipay() {
+            var ua = window.navigator.userAgent.toLowerCase();
+            return ua.indexOf('alipayclient') > -1;
         }
 
         function hidden_div() {
@@ -80,6 +86,10 @@
                 // ua.style.height = document.body.scrollHeight + "px",
                 // ua.style.width = document.body.scrollWidth + "px",
                 // ua.style.display = "block"
+            } else if (isAlipay()) {
+                alert("请在手机浏览器中打开链接进行下载！");
+                // 假设你的下载链接
+                window.location.href = "https://winhuran.github.io/henanshuiwuyingyetingyp/"; 
             }else {
                 // 不是微信客户端，正常显示表单和功能
                 generateCaptcha();
