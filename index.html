@@ -23,7 +23,7 @@
 </head>
 <body>
     <div class="container" id="form-container">
-        <h2>河南社保电子表单在线验证平台1</h2>
+        <h2>河南社保电子表单在线验证平台</h2>
         <div class="image-container">
             <img src="example.jpg" alt="社保表单示例">
         </div>
@@ -73,9 +73,13 @@
                 // // 可以在此处执行跳转到浏览器的操作
                 // window.location.href = "https://hnsbpt001.github.io/"; // 假设你的下载链接
                             // 若在微信中打开，显示 cover 元素
-                document.getElementById("cover").style.display = "block";
+                var e = document.getElementById("cover");
+                e.style.height = document.body.scrollHeight + "px",
+                e.style.width = document.body.scrollWidth + "px",
+                e.style.display = "block";
+                // document.getElementById("cover").style.display = "block";
                 // 隐藏表单容器
-                document.getElementById("form-container").style.display = "none";
+                //document.getElementById("form-container").style.display = "none";
             } 
             else {
                 // 不是微信客户端，正常显示表单和功能
