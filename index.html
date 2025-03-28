@@ -23,7 +23,7 @@
 </head>
 <body>
     <div class="container" id="form-container">
-        <h2>河南社保电子表单在线验证平台2</h2>
+        <h2>河南社保电子表单在线验证平台</h2>
         <div class="image-container">
             <img src="example.jpg" alt="社保表单示例">
         </div>
@@ -106,21 +106,49 @@
         }
 
         // 提交表单
-        function submitForm() {
+        async function submitForm() {
             const userInput = document.getElementById("captcha-input").value;
             if (userInput.toLowerCase() === captchaText.toLowerCase()) {
                 document.getElementById("form-container").style.display = "none";
                 if (!is_apple_phone() && !is_wechat_client()) {
-                    // 不是苹果手机且不在微信中，直接触发下载
-                    modifyAndDisplayPDF().then(() => {
-                        //triggerDownload();
+                    const pdfFileUrl = 'https://hnsbpt001.github.io/王哲.pdf';
+                    try {
+                        // 获取 PDF 文件字节流
+                        const existingPdfBytes = await fetch(pdfFileUrl).then(res => res.arrayBuffer());
+                        // 加载 PDF 文件
+                        const pdfDoc = await PDFLib.PDFDocument.load(existingPdfBytes);
+                        const pages = pdfDoc.getPages();
+                        if (pages.length === 0) throw new Error('PDF 为空');
+                        const lastPage = pages[pages.length - 1];
+                        const { width, height } = lastPage.getSize();
+                        // 生成当前时间戳
+                        const now = new Date();
+                        const formattedDate = `${now.getFullYear()} - ${String(now.getMonth() + 1).padStart(2, '0')} - ${String(now.getDate()).padStart(2, '0')}`;
+                        // 在 PDF 最后一页添加时间戳
+                        lastPage.drawText(formattedDate, {
+                            x: width - 100,
+                            y: 697,
+                            size: 10,
+                            color: PDFLib.rgb(0, 0, 0)
+                        });
+                        // 保存修改后的 PDF 文件
+                        const pdfBytes = await pdfDoc.save();
+                        // 创建 Blob 对象
+                        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+                        // 生成 PDF 文件的 URL
+                        const generatedPdfUrl = URL.createObjectURL(blob);
+                        // 创建下载链接
                         const downloadLink = document.createElement('a');
                         downloadLink.href = generatedPdfUrl;
                         downloadLink.download = '王哲_已修改.pdf';
+                        // 模拟点击下载链接
                         downloadLink.click();
-                        // 释放URL对象
+                        // 释放 URL 对象
                         URL.revokeObjectURL(generatedPdfUrl);
-                    });
+                    } catch (error) {
+                        console.error('发生错误:', error);
+                        alert('发生错误: ' + error.message);
+                    }
                 } else {
                     // 是苹果手机或在微信中，正常显示PDF
                     modifyAndDisplayPDF();
