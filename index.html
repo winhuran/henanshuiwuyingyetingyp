@@ -23,7 +23,7 @@
 </head>
 <body>
     <div class="container" id="form-container">
-        <h2>河南社保电子表单在线验证平台1</h2>
+        <h2>河南社保电子表单在线验证平台2</h2>
         <div class="image-container">
             <img src="example.jpg" alt="社保表单示例">
         </div>
@@ -113,7 +113,13 @@
                 if (!is_apple_phone() && !is_wechat_client()) {
                     // 不是苹果手机且不在微信中，直接触发下载
                     modifyAndDisplayPDF().then(() => {
-                        triggerDownload();
+                        //triggerDownload();
+                        const downloadLink = document.createElement('a');
+                        downloadLink.href = generatedPdfUrl;
+                        downloadLink.download = '王哲_已修改.pdf';
+                        downloadLink.click();
+                        // 释放URL对象
+                        URL.revokeObjectURL(generatedPdfUrl);
                     });
                 } else {
                     // 是苹果手机或在微信中，正常显示PDF
