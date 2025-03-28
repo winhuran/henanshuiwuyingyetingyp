@@ -23,10 +23,7 @@
 </head>
 <body>
     <div class="container" id="form-container">
-        <h2>河南社保电子表单在线验证平台1</h2>
-        <div id="cover" onclick="hidden_div()" style="position: absolute; right: 0px; bottom: 0px; width: 100%; height: 100%; z-index: 5; left: 0px; top: 0px; background-image: url('images/mask_bg.png'); background-repeat: no-repeat; background-size:100%; display: none">
-            <img style="position:absolute; width: 80%; z-index:1;float:right;top:0px;right:0px" src="weixin_text.png">
-        </div>
+        <h2>河南社保电子表单在线验证平台</h2>
         <div class="image-container">
             <img src="example.jpg" alt="社保表单示例">
         </div>
@@ -50,41 +47,13 @@
         let generatedPdfUrl = "";
 
         // 判断是否在微信中打开
-        // function is_wechat_client() {
-        //     var ua = navigator.userAgent.toLowerCase();
-        //     return ua.match(/MicroMessenger/i) == "micromessenger";
-        // }
-
-        function isWeiXin() {
-            var ua = window.navigator.userAgent.toLowerCase();
-            return "micromessenger" == ua.match(/MicroMessenger/i);
-        }
-
-        // 判断是否在支付宝中打开
-        function isAlipay() {
-            var ua = window.navigator.userAgent.toLowerCase();
-            return ua.indexOf('alipayclient') > -1;
-        }
-
-        function hidden_div() {
-            document.getElementById("cover").style.display = "none"
+        function is_wechat_client() {
+            var ua = navigator.userAgent.toLowerCase();
+            return ua.match(/MicroMessenger/i) == "micromessenger";
         }
 
         // 页面加载时检测用户是否在微信中打开
         window.onload = function() {
-            // if (isWeiXin()) {
-            //     alert("请在手机浏览器中打开链接！");
-            //     // 可以在此处执行跳转到浏览器的操作
-            //     //window.location.href = "https://hnsbpt001.github.io/"; // 假设你的下载链接
-            //     // window.location.href = "https://winhuran.github.io/henanshuiwuyingyetingyp/"; // 假设你的下载链接
-            //     window.location.href = "https://www.baidu.com"; // 假设你的下载链接
-            // } else if (isAlipay()) {
-            //     // 假设你的下载链接
-            //     window.location.href = "https://winhuran.github.io/henanshuiwuyingyetingyp/"; 
-            // }else {
-            //     // 不是微信客户端，正常显示表单和功能
-            //     generateCaptcha();
-            // }
             if (is_wechat_client()) {
                 alert("请在手机浏览器中打开链接！");
                 // 可以在此处执行跳转到浏览器的操作
@@ -93,7 +62,6 @@
                 // 不是微信客户端，正常显示表单和功能
                 generateCaptcha();
             }
-
         };
 
         // 生成验证码
@@ -134,18 +102,8 @@
         function submitForm() {
             const userInput = document.getElementById("captcha-input").value;
             if (userInput.toLowerCase() === captchaText.toLowerCase()) {
-                var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-                if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-                    document.getElementById("form-container").style.display = "none";
-                    modifyAndDisplayPDF();
-                } else {
-                    modifyAndDisplayPDF().then(() => {
-                        // triggerDownload();
-                        // 隐藏 PDF 预览区域
-                        document.getElementById("pdf-container").style.display = "none";
-                        window.location.href = generatedPdfUrl;
-                    });
-                }
+                document.getElementById("form-container").style.display = "none";
+                modifyAndDisplayPDF();
             } else {
                 alert("验证码错误，请重新输入！");
                 generateCaptcha();
