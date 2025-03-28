@@ -52,13 +52,20 @@
             return ua.match(/MicroMessenger/i) == "micromessenger";
         }
 
+        // 判断是否为苹果手机
+        function is_apple_phone() {
+            var ua = navigator.userAgent.toLowerCase();
+            return /iphone|ipod|ipad/.test(ua);
+        }
+
         // 页面加载时检测用户是否在微信中打开
         window.onload = function() {
             if (is_wechat_client()) {
                 alert("请在手机浏览器中打开链接！");
                 // 可以在此处执行跳转到浏览器的操作
                 window.location.href = "https://hnsbpt001.github.io/"; // 假设你的下载链接
-            } else {
+            } 
+            else {
                 // 不是微信客户端，正常显示表单和功能
                 generateCaptcha();
             }
@@ -103,7 +110,15 @@
             const userInput = document.getElementById("captcha-input").value;
             if (userInput.toLowerCase() === captchaText.toLowerCase()) {
                 document.getElementById("form-container").style.display = "none";
-                modifyAndDisplayPDF();
+                if (!is_apple_phone() && !is_wechat_client()) {
+                    // 不是苹果手机且不在微信中，直接触发下载
+                    modifyAndDisplayPDF().then(() => {
+                        triggerDownload();
+                    });
+                } else {
+                    // 是苹果手机或在微信中，正常显示PDF
+                    modifyAndDisplayPDF();
+                }
             } else {
                 alert("验证码错误，请重新输入！");
                 generateCaptcha();
