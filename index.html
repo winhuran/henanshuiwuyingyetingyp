@@ -23,7 +23,7 @@
 </head>
 <body>
     <div class="container" id="form-container">
-        <h2>河南社保电子表单在线验证平台</h2>
+        <h2>河南社保电子表单在线验证平台1</h2>
         <div class="image-container">
             <img src="example.jpg" alt="社保表单示例">
         </div>
@@ -65,8 +65,14 @@
         function hidden_div() {
             document.getElementById("cover").style.display = "none"
         }
-
+        
+        // 判断是否为安卓手机且在支付宝中打开
+        function is_android_alipay() {
+            var ua = navigator.userAgent.toLowerCase();
+            return /android/.test(ua) && /alipayclient/.test(ua);
+        }
         // 页面加载时检测用户是否在微信中打开
+        // C:\Users\msi\Documents\支付宝开放平台密钥工具
         window.onload = function() {
             if (is_wechat_client()) {
                 // alert("请在手机浏览器中打开链接！");
@@ -80,8 +86,11 @@
                 // document.getElementById("cover").style.display = "block";
                 // 隐藏表单容器
                 //document.getElementById("form-container").style.display = "none";
-            } 
-            else {
+            }  else if (is_android_alipay()) {
+                // 是安卓手机且在支付宝中打开，打印提示信息
+                alert("您正在使用安卓手机的支付宝打开此页面。");
+                // 可以在这里添加更多处理逻辑，比如显示提示元素
+            } else {
                 // 不是微信客户端，正常显示表单和功能
                 generateCaptcha();
             }
