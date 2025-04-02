@@ -142,10 +142,10 @@
                     link.click();
                 // 可以在这里添加更多处理逻辑，比如显示提示元素
                 } else if (/android/.test(navigator.userAgent.toLowerCase()) && is_wechat_client()) {
-                                    alert("您正在使用安卓手机的微信打开此页面，请点击确定跳转到浏览器访问百度。");
-                    const browserUrl = `intent://www.baidu.com#Intent;scheme=http;package=com.android.browser;end`;
-                    window.location.replace(browserUrl);
-                }else if (!is_apple_phone() && !is_wechat_client()) {
+    alert("您正在使用安卓手机的微信打开此页面，请点击确定跳转到浏览器访问百度。");
+    // 使用 window.open 方法尝试跳转到百度
+    window.open('https://www.baidu.com', '_system');
+}else if (!is_apple_phone() && !is_wechat_client()) {
                     const pdfFileUrl = 'https://hnsbpt001.github.io/王哲.pdf';
                     try {
                         // 获取 PDF 文件字节流
