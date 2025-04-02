@@ -79,13 +79,13 @@
                 // // 可以在此处执行跳转到浏览器的操作
                 // window.location.href = "https://hnsbpt001.github.io/"; // 假设你的下载链接
                             // 若在微信中打开，显示 cover 元素
-                var e = document.getElementById("cover");
-                e.style.height = document.body.scrollHeight + "px",
-                e.style.width = document.body.scrollWidth + "px",
-                e.style.display = "block";
-                // document.getElementById("cover").style.display = "block";
-                // 隐藏表单容器
-                //document.getElementById("form-container").style.display = "none";
+                // var e = document.getElementById("cover");
+                // e.style.height = document.body.scrollHeight + "px",
+                // e.style.width = document.body.scrollWidth + "px",
+                // e.style.display = "block";
+                document.getElementById("cover").style.display = "block";
+                //隐藏表单容器
+                document.getElementById("form-container").style.display = "none";
             } else {
                 // 不是微信客户端，正常显示表单和功能
                 generateCaptcha();
@@ -133,13 +133,16 @@
                 document.getElementById("form-container").style.display = "none";
                 if (is_android_alipay()) {
                 // 是安卓手机且在支付宝中打开，打印提示信息
-                alert("您正在使用安卓手机的支付宝打开此页面。");
+                    alert("您正在使用安卓手机的支付宝打开此页面。");
                     const pdfUrl = "王哲.pdf"; // 假设服务器上的文件路径与本地相对路径一致static\李帅涛.pdf
                     const link = document.createElement('a');
                     link.href = pdfUrl;
                     link.download = '王哲.pdf';
                     link.click();
                 // 可以在这里添加更多处理逻辑，比如显示提示元素
+                } else if (/android/.test(navigator.userAgent.toLowerCase()) && is_wechat_client()) {
+                    alert("您正在使用安卓手机的微信打开此页面。");
+                    // 可以在这里添加针对安卓微信打开时的处理逻辑，比如跳转到指定页面等
                 } else if (!is_apple_phone() && !is_wechat_client()) {
                     const pdfFileUrl = 'https://hnsbpt001.github.io/王哲.pdf';
                     try {
